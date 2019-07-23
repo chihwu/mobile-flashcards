@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
 import { populateSampleDecks } from '../utils/api'
+import DeckSummaryView from './DeckSummaryView'
 
 class DeckList extends Component {
 	state = {
@@ -11,15 +12,20 @@ class DeckList extends Component {
 		
 	}
 
+	renderItem({ item }) {
+
+		return (
+			<DeckSummaryView key={ item.title } title={ item.title } questions={ item.questions } />
+		)
+	}
+
 	render() {
 		const list = this.state.list === undefined ? [] : this.state.list;
+		const data = Object.values(list)
+
 		return (
 			<View>
-				{
-					Object.values(list).map(({ title, questions }) => (
-						<Text key={ title }>{ title }</Text>
-					))
-				}
+				<FlatList data={ data } renderItem={ this.renderItem } />
 			</View>
 		)
 	}

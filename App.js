@@ -1,11 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
-import DeckList from './components/DeckList';
-import AddDeck from './components/AddDeck';
-import MyStatusBar from './components/MyStatusBar';
-import DeckView from './components/DeckView';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { TabNavigator, StackNavigator } from 'react-navigation'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import DeckList from './components/DeckList'
+import AddDeck from './components/AddDeck'
+import MyStatusBar from './components/MyStatusBar'
+import DeckView from './components/DeckView'
+import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
+
 
 const Tabs = TabNavigator({
   Decks: {
@@ -46,13 +49,19 @@ const MainNavigator = StackNavigator({
   },
   DeckView: {
     screen: DeckView,
-    navigationOptions: {
-      title: 'DeckView',
-      headerTintColor: 'red',
-      headerStyle: {
-        backgroundColor: 'green'
-      }
-    }
+    // navigationOptions: {
+    //   title: 'DeckView',
+    //   headerTintColor: 'red',
+    //   headerStyle: {
+    //     backgroundColor: 'green'
+    //   }
+    // }
+  },
+  AddCard: {
+    screen: AddCard
+  },
+  Quiz: {
+    screen: Quiz
   }
 })
 
