@@ -1,15 +1,42 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, FlatList } from 'react-native'
-import { populateSampleDecks } from '../utils/api'
+import { getDecks } from '../utils/api'
 import DeckSummaryView from './DeckSummaryView'
+import { AppLoading } from 'expo'
 
 class DeckList extends Component {
 	state = {
-		list: populateSampleDecks()
+		list: {},
+		loading: true
 	}
 
+	didBlurSubscription = this.props.navigation.addListener(
+	  'willFocus',
+	  payload => {
+	    this.refresh()
+	  }
+	);
+
 	componentDidMount() {
-		
+		this.refresh()
+	}
+
+	refresh() {
+		getDecks().then((decks) => {
+			// alert('cool')
+			console.log("==========")
+			console.log(decks)
+			console.log("==========")
+			this.setState({
+				list: decks,
+				loading: false
+			})
+		})
+	}
+
+	componentWillUnmount() {
+	    // remove event listener
+	    this.didBlurSubscription.remove()
 	}
 
 	renderItem({ item }) {
@@ -23,6 +50,12 @@ class DeckList extends Component {
 		const list = this.state.list === undefined ? [] : this.state.list;
 		const data = Object.values(list)
 
+		if (this.state.loading) {
+	    	return (<AppLoading/>)
+	    }
+	    // console.log("$$$$$$$$$$");
+	    // console.log(list);
+	    // console.log("$$$$$$$$$$");
 		return (
 			<View>
 				<FlatList data={ data } renderItem={ this.renderItem } />

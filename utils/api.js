@@ -2,8 +2,8 @@ import { AsyncStorage } from 'react-native'
 
 const DECK_STORAGE_KEY = 'mobile_flashcard_decks'
 
-export function populateSampleDecks() {
-	return {
+function populateSampleDecks() {
+	const dummyDeck = {
 		React: {
 	      title: 'React',
 	      questions: [
@@ -26,21 +26,56 @@ export function populateSampleDecks() {
 	      ]
 	    }
 	}
+
+	AsyncStorage.setItem(
+		DECK_STORAGE_KEY,
+		JSON.stringify(dummyDeck)
+	)
+
+	return dummyDeck
 }
 
 export function getDecks() {
-
+	// AsyncStorage.setItem(DECK_STORAGE_KEY, '')
+	return AsyncStorage.getItem(
+			DECK_STORAGE_KEY
+		).then((results) => {
+			return results ? JSON.parse(results) : {}
+		})
 }
 
 export function getDeck(deckID) {
-
+	return getDecks().then((results) => {
+		return results[deckID]
+	})
 }
 
 export function saveDeckTitle(deckTitle) {
-
+	return getDecks().then((decks) => {
+		if (decks[deckTitle] != undefined) {
+			alert("A deck with the same name has existed.")
+		} else {
+			decks[deckTitle] = {
+				title: deckTitle,
+				questions: []
+			}
+			console.log("!!!!!!!!!!");
+			console.log(decks);
+			console.log("!!!!!!!!!!");
+			AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
+		}
+	})
 }
 
 export function addCardToDeck(deckTitle, card) {
+
+	return getDecks().then((decks) => {
+		if (decks[deckTitle] && decks[deckTitle]['questions']) {
+			decks[deckTitle]['questions'].push(card)
+
+			AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
+		}
+	})
 
 }
 

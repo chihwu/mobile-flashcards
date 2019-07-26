@@ -11,6 +11,11 @@ class DeckSummaryView extends Component {
 
 	render() {
 		const { title, questions } = this.props;
+		// console.log("+++++++++++");
+		// console.log(title);
+		// console.log("---------");
+		// console.log(questions);
+		// console.log("+++++++++++");
 
 		return (
 			<TouchableOpacity onPress={ () => this.onPressItem({ title, questions }) }>

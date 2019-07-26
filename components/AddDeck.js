@@ -1,15 +1,39 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { saveDeckTitle } from '../utils/api'
+import { NavigationActions, withNavigation } from 'react-navigation'
 
 class AddDeck extends Component {
+
+	state = {
+		title: null
+	}
+
+	onChangeText(title) {
+		this.setState({
+			title
+		})
+	}
+
+	onSubmit() {
+		const { title } = this.state
+		// console.log("*************");
+		// console.log(title)
+		// console.log("*************");
+		saveDeckTitle(title).then(() => {
+			this.props.navigation.navigate('Decks')
+		})
+		// alert(title)
+	}
+
 	render() {
 		return (
 			<View style={ styles.container }>
 				<Text style={ styles.title }>What is the title of your new deck?</Text>
 
-				<TextInput placeholder="Deck Title" maxLength={70} style={ styles.textInput } />
+				<TextInput placeholder="Deck Title" maxLength={70} style={ styles.textInput } onChangeText={ (title)=>{ this.onChangeText(title) } } />
 
-				<TouchableOpacity style={ styles.button }> 
+				<TouchableOpacity style={ styles.button } onPress={ () => { this.onSubmit() } }> 
 					<Text>Submit</Text>
 				</TouchableOpacity>
 			</View>
@@ -17,7 +41,7 @@ class AddDeck extends Component {
 	}
 }
 
-export default AddDeck
+export default withNavigation(AddDeck)
 
 const styles = StyleSheet.create({
 	container: {

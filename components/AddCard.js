@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { addCardToDeck } from '../utils/api'
+import { NavigationActions, withNavigation } from 'react-navigation'
 
 class AddCard extends Component {
+
+	state = {
+		question: null,
+		answer: null
+	}
+
+	onSubmit() {
+		const { title } = this.props.navigation.state.params
+		const { question, answer } = this.state
+		// alert(title)
+		addCardToDeck(title, { question, answer }).then(()=>{
+			this.props.navigation.navigate('Decks')
+		})
+	}
 
 	render() {
 		return (
 			<View style={ styles.container }>
-				<TextInput placeholder="Quiz Title" maxLength={70} style={ styles.textInput } />
+				<TextInput placeholder="Quiz Title" maxLength={70} style={ styles.textInput } onChangeText={ ( question )=>{ this.setState({ question }) } } />
 
-				<TextInput placeholder="Quiz Content" maxLength={70} style={ styles.textInput } />
+				<TextInput placeholder="Quiz Content" maxLength={70} style={ styles.textInput } onChangeText={ ( answer )=>{ this.setState({ answer }) } } />
 
-				<TouchableOpacity style={ styles.button }> 
+				<TouchableOpacity style={ styles.button } onPress={ () => ( this.onSubmit() ) }> 
 					<Text>Submit</Text>
 				</TouchableOpacity>
 			</View>
@@ -18,7 +34,7 @@ class AddCard extends Component {
 	}
 }
 
-export default AddCard
+export default withNavigation(AddCard)
 
 const styles = StyleSheet.create({
 	container: {

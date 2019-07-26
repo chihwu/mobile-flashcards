@@ -21,10 +21,10 @@ class DeckView extends Component {
 		navigation.navigate('AddCard', { title })
 	}
 
-	goToQuiz(title) {
+	goToQuiz(questions) {
 		const { navigation } = this.props
 
-		navigation.navigate('Quiz', { title })
+		navigation.navigate('Quiz', { questions })
 	}
 
 	render() {
@@ -40,7 +40,7 @@ class DeckView extends Component {
 					<Text>Add Card</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity style={ styles.button } onPress={() => this.goToQuiz(title)}>
+				<TouchableOpacity style={ styles.button } onPress={() => this.goToQuiz(questions)}>
 					<Text>Start Quiz</Text>
 				</TouchableOpacity>
 			</View>
