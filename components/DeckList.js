@@ -58,7 +58,7 @@ class DeckList extends Component {
 	    // console.log("$$$$$$$$$$");
 		return (
 			<View>
-				<FlatList data={ data } renderItem={ this.renderItem } />
+				<FlatList keyExtractor={ (item, index) => item.title } data={ data } renderItem={ this.renderItem } />
 			</View>
 		)
 	}

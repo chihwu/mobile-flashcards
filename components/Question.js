@@ -28,7 +28,7 @@ class Question extends Component {
 		if (this.value >= 90) {
 			Animated.spring(this.animatedValue, {
 				toValue: 0,
-				friction: 8,
+				friction: 5,
 				tension: 10
 			}).start()
 
@@ -36,9 +36,9 @@ class Question extends Component {
 		} else {
 			Animated.spring(this.animatedValue, {
 				toValue: 180,
-				friction: 9,
+				friction: 5,
 				tension: 10
-			})
+			}).start()
 
 			this.setState({flipActionText: 'Question'})
 		}
@@ -74,8 +74,8 @@ class Question extends Component {
 					</Animated.View>
 				</View>
 
-				<TouchableOpacity onPress={() => this.flipCard()}>
-					<Text>cool</Text>
+				<TouchableOpacity  onPress={() => this.flipCard()}>
+					<Text style={ styles.flipText }>{ flipActionText }</Text>
 				</TouchableOpacity>
 			</View>
 		)
@@ -86,7 +86,6 @@ export default Question
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
     	justifyContent: 'center',
     	alignItems: 'center'
 	},
@@ -106,6 +105,10 @@ const styles = StyleSheet.create({
 		// backgroundColor: ''
 		position: 'absolute',
 		top: 0
+	},
+	flipText: { 
+		color: 'red', 
+		fontSize: 25 
 	}
 })
 
