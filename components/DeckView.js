@@ -30,6 +30,10 @@ class DeckView extends Component {
 	render() {
 		const { title, questions } = this.props.navigation.state.params
 
+		console.log("**********")
+		console.log(questions)
+		console.log("**********")
+
 		return (
 			<View style={ styles.listItem }>
 

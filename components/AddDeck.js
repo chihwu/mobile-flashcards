@@ -21,7 +21,8 @@ class AddDeck extends Component {
 		// console.log(title)
 		// console.log("*************");
 		saveDeckTitle(title).then(() => {
-			this.props.navigation.navigate('Decks')
+			// this.props.navigation.navigate('Decks')
+			this.props.navigation.navigate('DeckView', { title, questions: [] })
 		})
 		// alert(title)
 	}

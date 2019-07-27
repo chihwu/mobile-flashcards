@@ -14,8 +14,9 @@ class AddCard extends Component {
 		const { title } = this.props.navigation.state.params
 		const { question, answer } = this.state
 		// alert(title)
-		addCardToDeck(title, { question, answer }).then(()=>{
-			this.props.navigation.navigate('Decks')
+		addCardToDeck(title, { question, answer }).then((decks)=>{
+			const questions = decks[title]['questions']
+			this.props.navigation.navigate('DeckView', { title, questions })
 		})
 	}
 
